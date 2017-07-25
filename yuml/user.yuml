@@ -1,0 +1,19 @@
+// {type:usecase}
+// {direction:leftToRight}
+(note: figure 1.2{bg:beige})
+[User]-(Login)
+(Login)<(Regist)
+(Login)<(Find PWD)
+[User]-(Logout)
+[coustom]-(Buy Product)
+[coustom]-(Pay Bill)
+[coustom]-(Add Membership Point)
+[User]>[coustom]
+[Site Maintainer]-(Add Product)
+[User]>[Site Admin]
+[Site Admin]>[Site Maintainer]
+[Site Admin]-(Add User or Site Maintainer)
+(Add Product)<(Manage Resourses)
+(Delete Product)<(Manage Resourses)
+[Site Maintainer]-(Delete Product)
+[Site Maintainer]-(Add Discount)

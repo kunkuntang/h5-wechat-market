@@ -1,0 +1,52 @@
+//
+   Created by Administrator on 2016/11/20.
+
+extends ../../layout
+
+block content
+    .container
+        .row
+            form.form-horizontal(method="post", action="/v1/books/updateBook", enctype='multipart/form-data')
+                input#bookID(type="hidden", name="book[_id]", value="#{book._id}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputTitle") 豆瓣图书ID
+                    .col-sm-10
+                        input#DouBanInput.form-control(type="text")
+                        button#syncDouBanBook(type="button") 同步豆瓣
+                .form-group
+                    label.col-sm-2.control-label(for="inputName") 图书名字
+                    .col-sm-10
+                        input#inputName.form-control(type="text", name="book[name]", value="#{book.name}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputAuthor") 作家
+                    .col-sm-10
+                        input#inputAuthor.form-control(type="text", name="book[author]", value="#{book.author}")
+                .form-group
+                    label.col-sm-2.control-label(for="publisher") 出版社
+                    .col-sm-10
+                        input#inputPublisher.form-control(type="text", name="book[publisher]", value="#{book.publisher}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputYear") 年份
+                    .col-sm-10
+                        input#inputYear.form-control(type="text", name="book[year]", value="#{book.year}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputSummary") 简介
+                    .col-sm-10
+                        input#inputSummary.form-control(type="text", name="book[summary]", value="#{book.summary}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputPoster") 海报
+                    .col-sm-10
+                        input#inputPoster.form-control(type="text", name="book[poster]", value="#{book.poster}")
+                .form-group
+                    label.col-sm-2.control-label(for="uploadPoster") 海报上传
+                    .col-sm-10
+                        input#uploadPoster(type="file", name="uploadPoster")
+                .form-group
+                    label.col-sm-2.control-label(for="inputPoster") 图书
+                    .col-sm-10.input-group
+                        input#inputBook.form-control(type="text", name="book[src]", value="#{book.src}")
+                        .input-group-btn                            
+                            label.btn.btn-primary(for="selectBook") 选择图书
+                button.btn.btn-primary.pull-right(type="submit") 提交
+        input#selectBook.hidden(type="file")
+    script(src="/js/admin.js")

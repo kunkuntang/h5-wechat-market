@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/regist" method="post" id="myForm">
+        username:
+        <input type="text" name="username" id="uName">
+        password:
+        <input type="password" name="password" id="pwd">
+        <span class="tips"></span>
+        confirm password:
+        <input type="password" id="cPwd">
+    </form>
+    <button type="submit" id="submit">submit</button>
+</body>
+{{> script}}
+
+<script>
+    $(document).ready(function() {
+        var subBtn = $('#submit')
+
+        subBtn.on('click', function() {
+            var uName = $('#uName').val()
+            var pwd = $('#pwd').val()
+            var cpwd = $('#cPwd').val()
+            var myForm = $('#myForm')
+
+            console.log(pwd)
+            console.log(cpwd)
+            
+            if (!pwd || !cpwd) {
+                alert('密码不能为空')
+            } else if ( pwd !== cpwd ) {
+                alert("两次输入的密码不匹配！！")
+            } else {
+                myForm.submit()
+            }
+        })
+
+        console.log(uName)
+        console.log(pwd)
+    })
+</script>
+</html>

@@ -1,0 +1,38 @@
+//
+   Created by Administrator on 2016/11/20.
+
+extends ../../layout
+
+block content
+    .container
+        .row
+            form.form-horizontal(method="post", action="/v1/softwares/updateSoftware", enctype='multipart/form-data')
+                input#softwareID(type="hidden", name="software[_id]", value="#{software._id}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputName") 软件名字
+                    .col-sm-10
+                        input#inputName.form-control(type="text", name="software[name]", value="#{software.name}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputCompany") 公司
+                    .col-sm-10
+                        input#inputCompany.form-control(type="text", name="software[comapny]", value="#{software.company}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputYear") 年份
+                    .col-sm-10
+                        input#inputYear.form-control(type="text", name="software[year]", value="#{software.year}")
+                .form-group
+                    label.col-sm-2.control-label(for="inputPoster") 封面地址
+                    .col-sm-10
+                        input#inputPoster.form-control(type="text", name="software[poster]", value="#{software.poster}")
+                .form-group
+                    label.col-sm-2.control-label(for="uploadPoster") 封面上传
+                    .col-sm-10
+                        input#uploadPoster(type="file", name="uploadPoster")
+                .form-group
+                    label.col-sm-2.control-label(for="inputPoster") 软件地址
+                    .col-sm-10.input-group
+                        input#inputVideo.form-control(type="text", name="software[src]", value="#{software.src}")
+                        .input-group-btn                            
+                            label.btn.btn-primary(for="selectSoftware") 选择软件
+                button.btn.btn-primary.pull-right(type="submit") 提交
+        input#selectSoftware.hidden(type="file")

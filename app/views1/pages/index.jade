@@ -1,0 +1,59 @@
+//Created by Administrator on 2016/11/16.
+extends ../layout
+
+block content
+  link(rel="stylesheet", href="/css/index.css")
+  .container
+    .h2 电影
+    .row
+      each item in data.movies
+        .col-sm-2.col-sm-offset-0.col-xs-8.col-xs-offset-2.card
+          .thumbnail
+            a(href="/movie/#{item._id}")
+              img.img-responsive.poster(src="#{item.poster}", alt="#{item.title}")
+            .caption.text-center
+              span.title #{item.title}
+              span.year 年份：#{item.year}
+            div.btn-group.btn-group-sm.operateBtn
+              button.btn.btn-primary(type="button") 
+                a(href="/movie/#{item._id}") 详情
+              button.btn.btn-info(type="button")
+                //- a.download(href="#{item.video}")
+                a.download(href="#{item.video}&name=#{item.title}")
+                  span.glyphicon.glyphicon-download-alt
+  .container
+    .h2 图书
+    .row
+      each item in data.books
+        .col-sm-2.col-sm-offset-0.col-xs-8.col-xs-offset-2.card
+          .thumbnail
+            a(href="/movie/#{item._id}")
+              img.img-responsive.poster(src="#{item.poster}", alt="#{item.title}")
+            .caption.text-center
+              span.bookName #{item.name}
+              span.year 年份：#{item.year}
+            div.btn-group.btn-group-sm.operateBtn
+              button.btn.btn-primary(type="button") 
+                a(href="/book/#{item._id}") 详情
+              button.btn.btn-info(type="button")
+                //- a.download(href="#{item.video}")
+                a.download(href="#{item.src}&name=#{item.name}")
+                  span.glyphicon.glyphicon-download-alt
+  .container
+    .h2 软件
+    .row
+      each item in data.softwares
+        .col-sm-2.col-sm-offset-0.col-xs-8.col-xs-offset-2.card
+          .thumbnail
+            a(href="/movie/#{item._id}")
+              img.img-responsive.poster(src="/poster/#{item.poster}", alt="#{item.title}")
+            .caption.text-center
+              span.bookName #{item.name}
+              span.year 年份：#{item.year}
+            div.btn-group.btn-group-sm.operateBtn
+              button.btn.btn-primary(type="button") 
+                a(href="/software/#{item._id}") 详情
+              button.btn.btn-info(type="button")
+                //- a.download(href="#{item.video}")
+                a.download(href="#{item.src}&name=#{item.name}")
+                  span.glyphicon.glyphicon-download-alt

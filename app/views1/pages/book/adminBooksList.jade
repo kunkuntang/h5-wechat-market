@@ -1,0 +1,30 @@
+// Created by Administrator on 2016/11/16.
+
+extends ../../layout
+
+block content
+  .container
+    .row
+      table.table.talbe-hover.table-bordered
+        thead
+          tr
+            th 书名
+            th 作者
+            th 出版年份
+            th 录入时间
+            th 查看
+            th 更新
+            th 删除
+        tbody
+          each item in books
+            tr(class="item-id-#{item.id}")
+              td #{item.name}
+              td #{item.author}
+              td #{item.year}
+              td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+              td: a(target="_blank", href="../book/#{item._id}") 查看
+              td: a(target="_blank", href="updateBook/#{item._id}") 修改
+              //- td: a.btn.btn-danger.del(href="../v1/deletMovie/#{item._id}") 删除
+              td: button.btn.btn-danger.delBook(type="button", data-id="#{item._id}") 删除
+  script(src="/js/admin.js")
+ 
