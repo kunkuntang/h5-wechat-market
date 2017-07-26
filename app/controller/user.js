@@ -12,9 +12,19 @@ exports.addUser = function (req, res) {
     })
     _user.save(userObj, function (err, user) {
         if (err) {
-            console.error(err)
+            console.log(err.code)
+            if (err.code === 11000) {// 用户已存在
+                res.send({
+                    flag: 0,
+                    mes: 'user exist, please take an another user name'
+                })
+            }
         } else {
-            res.redirect('/signIn');
+            console.log('redirect')
+            // res.redirect('/userCenter');
+            res.send({
+                login: 1 // success
+            })
         }
     });
 };
@@ -64,7 +74,7 @@ exports.signIn = function(req, res) {
             if (isMatch) {
                 console.log('password is matched')
                 req.session.user = user
-                return res.redirect('/')
+                return res.redirect('/userCenter')
             } else {
                 console.log('password is not matched')
             }
@@ -90,20 +100,18 @@ exports.getUserList = function(req, res) {
 }
 
 exports.signInPage = function(req, res) {
-    res.render('login', {
-        layout: null
-    })
+    res.render('signIn')
 }
 
 exports.logout = function(req, res, app) {
     delete req.session.user
     delete app.locals.user
 
-    res.redirect('/')
+    res.redirect('/userCenter')
 }
 
 exports.registPage = function(req, res) {
-    res.render('regist', { layout: null })
+    res.render('regist')
 }
 
 exports.signInRequired = function(req, res, next) {
@@ -124,4 +132,13 @@ exports.adminRequired = function(req, res, next) {
     }
 
     next()
+}
+
+// ------------ page --------------
+
+exports.userCenterPage = function(req, res) {
+    res.render('user/userCenter', {
+        title: 'user center',
+        user: req.session.user
+    })
 }

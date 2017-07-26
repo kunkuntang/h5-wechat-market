@@ -1,0 +1,38 @@
+.user-name {
+    line-height: 48px;
+    font-size: 24px;
+    display: inline-block;
+}
+
+.ui-avatar-xlg, .ui-avatar-one{
+    width: 140px;
+    height: 140px;
+    border-radius: 200px;
+    -webkit-border-radius: 200px;
+    overflow: hidden;
+    display: block;
+}
+
+.ui-avatar-xlg>span, .ui-avatar-one>span{
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size : cover;
+    border-radius: 200px;
+    -webkit-border-radius: 200px;
+}
+
+.logout-con,
+.login-con {
+    padding: 0 5px;
+}
+
+
+.ui-whitespace .signIn,
+.ui-whitespace .regist {
+    margin-top: 10px;
+}
+

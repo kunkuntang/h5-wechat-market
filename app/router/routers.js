@@ -55,7 +55,7 @@ module.exports = function (app) {
     // user signIn
     app.post('/v1/user/signIn', User.signIn)
 
-    app.post('/regist', User.addUser)
+    app.post('/v1/user/regist', User.addUser)
 
     // user logout
     app.get('/logout', function (req, res) {
@@ -86,9 +86,13 @@ module.exports = function (app) {
     app.get('/software/:id', Software.softwareDetailPage)
 
     // product list
+    app.get('/productList', Product.productListPage)
 
     // product detail page
     app.get('/product/:id', Product.productDetailPage)
+
+    // user center page 
+    app.get('/userCenter', User.userCenterPage)
 
     app.get('/signIn', User.signInPage)
 

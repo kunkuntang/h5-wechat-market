@@ -1,0 +1,70 @@
+{{#section 'head'}}
+	<link rel="stylesheet" href="/css/userCenter.css">
+{{/section}}
+
+{{#if user}}
+    <header class="ui-header"></header>
+    <div class="ui-container user-head ui-center">
+        <div class="ui-avatar-xlg">
+            <span style="background-image:url(http://placeholder.qiniudn.com/140x140)"></span>
+        </div>
+            <span class="user-name">{{user.name}}</span>
+    </div>
+
+    <div class="ui-container">
+        <ul class="ui-list ui-list-text ui-list-link ui-border-tb">
+            <li class="ui-border-t">
+                <h4>my orders</h4>
+            </li>
+            <li class="ui-border-t">
+                <h4 class="ui-nowrap">my address</h4>
+            </li>
+            <li class="ui-border-t">
+                <h4>setting</h4>
+            </li>
+        </ul>
+    </div>
+
+    <div class="logout-con ui-container">
+        <a href="/logout"><button class="ui-btn-danger ui-btn-lg">Logout</button></a>
+    </div>
+
+{{else}}
+    <header class="ui-header"></header>
+    <div class="ui-container user-head ui-center">
+        <div class="ui-avatar-xlg">
+            <span style="background-image:url(http://placeholder.qiniudn.com/140x140)"></span>
+        </div>
+            <span class="user-name">Guest</span>
+    </div>
+
+    {{!-- <div class="ui-whitespace ui-container">
+        <a href="/signIn"><button class="ui-btn-primary ui-btn-lg">Sign In</button></a>
+        <a href="/regist"><button class="ui-btn-lg">Regist</button></a>
+    </div> --}}
+    <header class="ui-header"></header>
+    <div class="ui-container">
+<div class="ui-form ui-border-t">
+    <form action="/v1/user/signIn" method="post">
+        <div class="ui-form-item ui-form-item-pure ui-border-b">
+            <input type="text" placeholder="QQ号/手机号/邮箱" name="name">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-form-item ui-form-item-pure ui-border-b">
+            <input type="password" placeholder="密码" name="password">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-form-item ui-form-item-r ui-border-b">
+            <input type="text" placeholder="请输入验证码">
+            <!-- 若按钮不可点击则添加 disabled 类 -->
+            <button type="button" class="ui-border-l">重新发送</button>
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-whitespace ui-container">
+            <button type="submit" class="signIn ui-btn-lg ui-btn-primary" type="submit">submit</button>
+            <a href="/regist" class="regist ui-btn-lg">Regist</a>
+        </div>
+    </form>
+</div>
+</div>
+{{/if}}

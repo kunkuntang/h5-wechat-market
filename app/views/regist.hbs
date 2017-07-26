@@ -1,49 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/regist" method="post" id="myForm">
-        username:
-        <input type="text" name="username" id="uName">
-        password:
-        <input type="password" name="password" id="pwd">
-        <span class="tips"></span>
-        confirm password:
-        <input type="password" id="cPwd">
-    </form>
-    <button type="submit" id="submit">submit</button>
-</body>
-{{> script}}
+{{#section 'head'}}
+    <style>
+        .ui-whitespace .signIn,
+        .ui-whitespace .regist {
+            margin-top: 10px;
+        }
+        .tips {
+            margin-top: 10px;
+            line-height: 25px;
+            height: 25px;
+        }
+    </style>
+{{/section}}
 
-<script>
-    $(document).ready(function() {
-        var subBtn = $('#submit')
-
-        subBtn.on('click', function() {
-            var uName = $('#uName').val()
-            var pwd = $('#pwd').val()
-            var cpwd = $('#cPwd').val()
-            var myForm = $('#myForm')
-
-            console.log(pwd)
-            console.log(cpwd)
+<header class="ui-header">
+    <i class="ui-icon-return" onclick="history.back()"></i>
+    <h1>Regist Page</h1>
+</header>
+<div class="ui-container">
+    <div class="ui-form ui-border-t">
+            <div class="ui-form-item ui-form-item-pure ui-border-b">
+                <input type="text" placeholder="QQ号/手机号/邮箱" name="username" id="uName">
+                <a href="#" class="ui-icon-close"></a>
+            </div>
+            <div class="ui-form-item ui-form-item-pure ui-border-b">
+                <input type="password" placeholder="密码" name="password" id="pwd">
+                <a href="#" class="ui-icon-close"></a>
+            </div>
+            <div class="ui-form-item ui-form-item-pure ui-border-b">
+                <input type="password" placeholder="确认密码" name="password" id="cPwd">
+                <a href="#" class="ui-icon-close"></a>
+            </div>
+            <div class="ui-form-item ui-form-item-r ui-border-b">
+                <input type="text" placeholder="请输入验证码">
+                <!-- 若按钮不可点击则添加 disabled 类 -->
+                <button type="button" class="ui-border-l">重新发送</button>
+                <a href="#" class="ui-icon-close"></a>
+            </div>
             
-            if (!pwd || !cpwd) {
-                alert('密码不能为空')
-            } else if ( pwd !== cpwd ) {
-                alert("两次输入的密码不匹配！！")
-            } else {
-                myForm.submit()
-            }
-        })
+    </div>
+    <div class="ui-whitespace tips ui-txt-warning" id="tips"></div>
+    <div class="ui-whitespace">
+        <button class="regist ui-btn-lg ui-btn-primary" type="submit" id="submit">Regist</button>
+    </div>
+</div>
 
-        console.log(uName)
-        console.log(pwd)
-    })
-</script>
-</html>
+{{#section 'script'}} 
+    <script>
+        $(document).ready(function() {
+            var subBtn = $('#submit')
+            var tips = $('#tips')
+            var timeStamp = 500
+            var flag = true
+
+                subBtn.on('tap', function(e) {
+                    var uName = $('#uName').val()
+                    var pwd = $('#pwd').val()
+                    var cpwd = $('#cPwd').val()
+                    var myForm = $('#myForm')
+                    var reqUrl = '/v1/user/regist'
+                    
+
+                    console.log(pwd)
+                    console.log(cpwd)
+
+                    if (flag) {
+                        flag = !flag
+                    
+                        console.log(flag)
+                    
+                        if (!pwd || !cpwd) {
+                            alert('密码不能为空')
+                        } else if ( pwd !== cpwd ) {
+                            alert("两次输入的密码不匹配！！")
+                        } else {
+                            $.post(reqUrl, {
+                                username: uName,
+                                password: pwd
+                            }, function(response) {
+                                console.log(response)
+                                if (response.flag) {
+                                    window.location.href = '/userCenter'
+                                } else {
+                                    tips.append('<span>'+ response.mes +'</span>')
+                                }
+                            })
+                        }
+
+                        setTimeout(function() {
+                            flag = !flag
+                        }, timeStamp)
+                    }
+                })
+
+                console.log(uName)
+                console.log(pwd)
+        })
+    </script>
+{{/section}} 

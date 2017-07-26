@@ -25,7 +25,6 @@ exports.index = function (req, res) {
 
 function renderPage (res, indexData) {
     res.render('index', {
-        layout: null,
         title: 'xingkong 首页',
         data: indexData
     })
