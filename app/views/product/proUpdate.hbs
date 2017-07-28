@@ -1,0 +1,107 @@
+{{#section 'head'}}
+    <style>
+        #discCon {
+            height: 0;
+            transition: height .3s ease;
+            overflow: hidden;
+        }
+        .upload-con {
+        }
+    </style>
+{{/section}}
+
+
+<header class="ui-header ui-header-positive">
+    </a><i class="ui-icon ui-icon-return" onclick="history.back()"></i>
+    <h1>商品详情</h1>
+</header>
+<div class="ui-container ui-whitespace">
+    <div class="ui-form ui-border-t">
+        <form action="/v1/product/updateProduct" method="post" enctype="multipart/form-data">
+            <div class="ui-form-item ui-border-b">
+                <label>
+                    商品名
+                </label>
+                <input type="text" placeholder="18位身份证号码">
+                <a href="#" class="ui-icon-close">
+                </a>
+            </div>
+            <div class="ui-form-item ui-form-item-textarea ui-border-b">
+                <label>
+                    商品描述
+                </label>
+                <textarea placeholder="产品等详细描述"></textarea>
+            </div>
+            <div class="ui-form-item ui-form-item-switch ui-border-b">
+                <p>
+                    是否打折
+                </p>
+                <label class="ui-switch">
+                    <input type="checkbox" id="discCB">
+                </label>
+            </div>
+            <div class="ui-form-item ui-border-b" id="discCon">
+                <label>
+                    商品折扣
+                </label>
+                <input type="text" placeholder="请输入折扣">
+                <a href="#" class="ui-icon-close">
+                </a>
+            </div>         
+        </form>
+    </div>
+    <div class="ui-btn-wrap">
+        <button class="ui-btn-lg ui-btn-primary">
+            提交
+        </button>
+    </div>
+</div>
+
+<div class="ui-container ui-whitespace">
+    <div class="ui-form">
+    <div class="upload-con ui-form-item ui-form-item-r ui-border-b">
+            <label for="uploadPoster">
+                产品封面
+            </label>
+            <input type="file" style="display: none" id="uploadPoster">
+            <button type="button" class="ui-border-l">上传图片</button>
+        </div>
+        <ul class="ui-grid-halve">
+            <li>
+                <div class="ui-grid-halve-img">
+                    <span style="background-image:url(http://placeholder.qiniudn.com/290x160)"></span>
+                    <div class="ui-progress">
+                        <span style="width:50%"></span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="ui-grid-halve-img">
+                    <span style="background-image:url(http://placeholder.qiniudn.com/290x160)"></span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{{#section 'script'}}
+    <script>
+        (function() {
+            var discCB = $('#discCB')
+            console.log(discCB)
+
+            var discCon = $('#discCon')
+
+            discCB.on('change', function() {
+                console.log($(this).prop('checked'))
+                var flag = $(this).prop('checked')
+                if (flag) {
+                    discCon.css('height', '44px')
+                } else {
+                    discCon.css('height', '0px')
+                }
+            })
+
+        })();
+    </script>
+{{/section}}

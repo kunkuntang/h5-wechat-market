@@ -25,12 +25,6 @@
     -webkit-border-radius: 200px;
 }
 
-.logout-con,
-.login-con {
-    padding: 0 5px;
-}
-
-
 .ui-whitespace .signIn,
 .ui-whitespace .regist {
     margin-top: 10px;

@@ -8,7 +8,8 @@ exports.addUser = function (req, res) {
     console.log('userObj', userObj)
     var _user = new User({
         name: userObj.username,
-        password: userObj.password
+        password: userObj.password,
+        role: userObj.role || 1,
     })
     _user.save(userObj, function (err, user) {
         if (err) {
@@ -23,7 +24,7 @@ exports.addUser = function (req, res) {
             console.log('redirect')
             // res.redirect('/userCenter');
             res.send({
-                login: 1 // success
+                flag: 1 // success
             })
         }
     });
@@ -53,8 +54,12 @@ exports.signUp = function(req, res) {
 }
 
 // signIn
+// flag: 
+// 0: user name or password is incorrect
+// 1: sign in success
+// 2: user name is not exit
 exports.signIn = function(req, res) {
-    var name = req.body.name
+    var name = req.body.username
     var password = req.body.password
 
     User.findOne({name: name}, function(err, user) {
@@ -62,23 +67,38 @@ exports.signIn = function(req, res) {
             console.log(err)
         }
 
-        if (!user) {
-            return res.redirect('/')
+        // if (user) {
+        //     return res.redirect('/')
+        // }
+        console.log('user: ', user)
+        if (user) {
+            user.comparePassword(password, function (err, isMatch) {
+                if (err) {
+                    console.log(err)
+                }
+
+                if (isMatch) {
+                    console.log('password is matched')
+                    req.session.user = user
+                    res.send({
+                        flag: 1
+                    })
+                } else {
+                    console.log('password is not matched')
+                    res.send({
+                        flag: 0,
+                        mes: 'password is incorrect!'
+                    })
+              
+                }
+            })
+        } else {
+            console.log('user name is not exits')
+            res.send({
+                flag: 2,
+                mes: 'user name is not exit'
+            })
         }
-
-        user.comparePassword(password, function (err, isMatch) {
-            if (err) {
-                console.log(err)
-            }
-
-            if (isMatch) {
-                console.log('password is matched')
-                req.session.user = user
-                return res.redirect('/userCenter')
-            } else {
-                console.log('password is not matched')
-            }
-        })
     })
 }
 
@@ -137,7 +157,7 @@ exports.adminRequired = function(req, res, next) {
 // ------------ page --------------
 
 exports.userCenterPage = function(req, res) {
-    res.render('user/userCenter', {
+    res.render('userCenter', {
         title: 'user center',
         user: req.session.user
     })

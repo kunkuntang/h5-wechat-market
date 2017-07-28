@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-var bcrypt =  require('bcrypt')
+// var bcrypt =  require('bcrypt')
 
 var SALT_WORK_FACTOR = 10
 
@@ -36,34 +36,27 @@ UserSchema.pre('save', function(next) {
 		this.meta.updateAt = Date.now()
 	}
 
-	bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-		if (err) return next(err)
+	// bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+	// 	if (err) return next(err)
+	// 		bcrypt.hash(user.password, salt, function(err, hash) {
+	// 			if (err) return next(err)
 
-		console.log('salt', salt)
-		bcrypt.hash(user.password, salt, function(err, hash) {
-			if (err) return next(err)
+	// 			user.password = hash
+	// 			next()
+	// 		})
+	// })
 
-			console.log('hash: ', hash)
-			console.log('user: ', user)
-			user.password = hash
-			console.log('user: ', user)
-			
-			next()
-		})
-	})
-
-	// next()
+	next()
 })
 
 UserSchema.methods = {
 	comparePassword: function(_password, cb) {
-		bcrypt.compare(_password, this.password, function(err, isMatch) {
-			if (err) return cb(err)
-			
-			console.log('isMatch: ', isMatch)
-			cb(null, isMatch)
-		})
-		// cb(null, _password === this.password)
+		// bcrypt.compare(_password, this.password, function(err, isMatch) {
+		// 	if (err) return cb(err)
+
+		// 	cb(null, isMatch)
+		// })
+		cb(null, _password === this.password)
 	}
 }
 

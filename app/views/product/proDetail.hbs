@@ -1,0 +1,171 @@
+{{#section 'head'}}
+    <style>
+        .banner {
+            padding-top: 50%;
+        }
+        .operate-panel {
+            height: 100%;
+            color: #ffffff;
+        }
+        .addCart {
+            border-left: 1px solid #e6e6e6;
+            background-color: #FF9500;
+        }
+        .buyBtn {
+            border-left: 1px solid #e6e6e6;
+            background-color: #DD2727;
+        }
+        .bg {
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: transparent;
+        }
+        .bg.active {
+            background-color: rgba(0, 0, 0, .8);
+        }
+        .choose-con {
+            position: absolute;
+            bottom: 0;
+            background-color: #ffffff;
+            transition: height .3s ease-in;
+            -moz-transition: height .3s ease-in;
+            -o-transition: height .3s ease-in;
+            height: 0px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .bg.active .choose-con {
+            height: 300px;
+        }
+    </style>
+{{/section}}
+
+<header class="ui-header ui-header-positive ui-border-b">
+    <a href="/userCenter"><i class="ui-icon-return"></i></a>
+    <h1>Product Detail</h1>
+</header>
+
+<div class="banner ui-container ui-slider" id="slider1">
+    <ul class="ui-slider-content" style="width: 300%">
+        <li><span style="background-image:url(http://placeholder.qiniudn.com/640x300)"></span></li>
+        <li><span style="background-image:url(http://placeholder.qiniudn.com/640x300)"></span></li>
+        <li><span style="background-image:url(http://placeholder.qiniudn.com/640x300)"></span></li>
+    </ul>
+</div>
+
+<div class="ui-container ui-whitespace ui-center">
+    <div class="title">title: {{product.name}}</div>
+    <table class="ui-table ui-border-tb">
+        <thead>
+        <tr><th>已购买</th><th>状态</th><th>会员到期时间</th></tr>
+        </thead>
+        <tbody>
+        <tr><td>2014257777</td><td>使用中</td><td>2016-02-06</td></tr>
+        <tr><td>2014257777</td><td>待付款</td><td><a href="#">付款</a></td></tr>
+        <tr><td>2014257777</td><td>待付款</td><td><a href="#">付款</a></td></tr>
+        </tbody>
+    </table>
+    <div class="ui-row">
+        <div class="desc">desc</div>
+        <div class="desc">discount: {{product.discount}}</div>
+    </div>
+</div>
+
+<div class="bg">
+    <div class="choose-con">
+        <div class="ui-form ui-border-t">
+            <form action="/v1/order/placeOrder" method="post" id="orderForm">
+                <div class="ui-form-item ui-border-b">
+                    <label>型号</label>
+                    <div class="ui-select">
+                        <select name="cate">
+                            <option value="0">A款</option>
+                            <option value="1" selected>B款</option>
+                            <option value="2">C款</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label>
+                        数量
+                    </label>
+                    <input type="Number" placeholder="购买数量" name="productNum" value="1">
+                    <a href="#" class="ui-icon-close">
+                    </a>
+                </div>
+                <div class="ui-form-item ui-form-item-textarea ui-border-b">
+                    <label>
+                        详细地址
+                    </label>
+                    <textarea placeholder="街道等详细地址" name="address"></textarea>
+                </div>
+                <div class="ui-form-item ui-form-item-textarea ui-border-b">
+                    <label>
+                        备注
+                    </label>
+                    <textarea placeholder="" name="remark"></textarea>
+                </div>
+                <input type="hidden" value="{{product.id}}" name="productId">
+                <input type="hidden" value="{{product.name}}" name="productName">
+            </form>
+        </div>
+    </div>
+</div>
+{{!-- {{product}} --}}
+    
+<div class="footer-bef"></div>
+
+<footer class="ui-footer ui-footer-stable ui-border-t">
+    <ul class="operate-panel ui-tiled">
+        <li class="price menu-item">
+            <span>price</span>
+        </li>
+        <li class="addCart menu-item">
+            <span>add cart</span>
+        </li>
+        <li class="buyBtn menu-item" id="buyBtn">
+            <span>buy</span>
+        </li>
+    </ul>
+</footer>
+
+{{#section 'script'}}
+<script>
+    (function(){
+        var buyBtn = $('#buyBtn')
+        var bg = $('.bg')
+
+        var slider = new fz.Scroll('.ui-slider', {
+            role: 'slider',
+            indicator: true,
+            autoplay: true,
+            interval: 3000
+        });
+
+        slider.on('beforeScrollStart', function(from, to) {
+            // console.log(from, to);
+        });
+
+        // show the panel after clicking the buy button
+        buyBtn.singleTap(function() {
+            console.log(bg.hasClass('active'))
+            if (bg.hasClass('active')) {
+                 $(orderForm).submit() 
+            } else {
+                bg.addClass('active')
+            }
+        })
+
+        // 点击背景后把弹出层隐藏
+        bg.on('click', function(e) {
+            if ($(e.target).hasClass('active')) {
+                $(this).removeClass('active')
+            }
+        })
+    })();
+</script>
+{{/section}}

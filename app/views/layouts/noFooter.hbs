@@ -7,18 +7,14 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/frozen.css">
-    <link rel="stylesheet" href="/css/index.css">
-    <script src="/js/plugins/zepto.min.js"></script>
+     <script src="/js/plugins/zepto.js"></script> 
+     {{!-- <script src="/js/plugins/zepto.min.js"></script>  --}}
+    <script src="/js/plugins/touch.js"></script>
     <script src="/js/frozen.js"></script>
-    {{{_sections.head}}}
+	{{{_sections.head}}}
 </head>
 <body>
-	this is main layout page
-	<a href="/">back</a>
-
 	{{{ body }}}
-
-	{{> footer}}
 </body>
 {{{_sections.script}}}
 </html>

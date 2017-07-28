@@ -9,15 +9,18 @@
     <li class="ui-col ui-col-25 cate-item">cate C</li>
     <li class="ui-col ui-col-25 cate-item">cate D</li>
 </ul>
+ {{!-- {{productList}}  --}}
 <secion class="ui-panel">
     <h2 class="ui-arrowlink">pro1</h2>
     <ul class="ui-grid-halve">
+         {{#each productList}} 
         <li>
-            <div class="ui-border">
+            <a href="/product/{{this._id}}"><div class="ui-border">
                 <img class="item-pic" src="http://placeholder.qiniudn.com/170x150">
-                <span class="item-name">aaa</span>
-            </div>
+                <span class="item-name">{{this.name}}</span>
+            </div></a>
         </li>
+        {{/each}}
         <li>
             <div class="ui-border">
                 <img class="item-pic" src="http://placeholder.qiniudn.com/170x150">

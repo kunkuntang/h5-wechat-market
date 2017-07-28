@@ -1,0 +1,27 @@
+<header class="ui-header ui-header-positive">
+    <i class="ui-icon-return" onclick="history.back()"></i>
+    <h1>orderList</h1>
+</header>
+
+<div class="ui-container">
+    <ul class="ui-list ui-list-link ui-border-tb">
+        {{#each orderList}}
+            <li class="ui-border-t">
+                <div class="ui-list-thumb">
+                    <span style="background-image:url(http://placeholder.qiniudn.com/100x100)"></span>
+                </div>
+                <div class="ui-list-info">
+                    <h4 class="ui-nowrap">ui-list-thumb缩略图</h4>
+                </div>
+            </li>
+        {{/each}}
+        <li class="ui-border-t">
+            <div class="ui-list-thumb">
+                <span style="background-image:url(http://placeholder.qiniudn.com/56x56)"></span>
+            </div>
+            <div class="ui-list-info">
+                <h4 class="ui-nowrap">ui-list-thumb-s缩略小图</h4>
+            </div>
+        </li>
+    </ul>
+</div>

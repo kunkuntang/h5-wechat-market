@@ -12,9 +12,9 @@ exports.productListPage = function(req, res) {
         if (err) {
             console.log(err)
         } else {
-            res.render('product/productsList', {
+            res.render('productsList', {
                 title: 'Product List',
-                products: productList
+                productList: productList
             })
         }
     })
@@ -29,7 +29,8 @@ exports.productDetailPage = function (req, res) {
             console.error(err)
         } else {
             console.log('result', product)
-            res.render('product/productDetail', {
+            res.render('product/proDetail', {
+                layout: 'noFooter',
                 title: ' 详情页',
                 product: product
             })
@@ -56,7 +57,8 @@ exports.adminProductList = function(req, res) {
 
 // admin add product page
 exports.addProductPage = function (req, res) {
-    res.render('product/updateProduct', {
+    res.render('product/proUpdate', {
+        layout: 'noFooter',
         title: '图书 后台录入页',
         product: {
             name: '',
@@ -122,7 +124,6 @@ exports.updateProduct = function (req, res) {
     var id = req.body._id;
     var productObj = req.body
 
-    // var ftpAdd = 'ftp://10.3.5.110/xkFTP/products'
     var ftpAdd = 'http://125.216.145.57:9080/download?resource='
     var category = 'products/'
     var _product

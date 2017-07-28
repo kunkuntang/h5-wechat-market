@@ -35,6 +35,13 @@ var handlebars = require('express3-handlebars').create(
                 if (!this._sections) this._sections = {};
                 this._sections[name] = options.fn(this);
                 return null;
+            },
+            compare: function(v1, v2, options) {
+                if (v1 < v2) {
+                    return options.fn(this);
+                } else {
+                    return options.inverse(this);
+                }
             }
         },
         layoutsDir: 'app/views/layouts',

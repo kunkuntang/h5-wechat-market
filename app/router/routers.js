@@ -8,6 +8,7 @@ var User = require('../controller/user')
 var Software = require('../controller/software')
 var Download = require('../controller/download')
 var Product = require('../controller/product')
+var Order = require('../controller/order')
 
 // var Movie = require('../models/movie');
 var _ = require('underscore');
@@ -52,6 +53,9 @@ module.exports = function (app) {
     // product add & update
     app.post('/v1/product/updateProduct', multipartMiddleware, Product.preSave, Product.updateProduct);
 
+    // place order 
+    app.post('/v1/order/placeOrder', Order.placeOrder)
+
     // user signIn
     app.post('/v1/user/signIn', User.signIn)
 
@@ -67,24 +71,6 @@ module.exports = function (app) {
     // //index page
     app.get('/', Index.index);
 
-    // movies list
-    app.get('/moviesList', Movie.movieListPage)
-
-    // movie detail page
-    app.get('/movie/:id', Movie.movieDetailPage)
-
-    // books list
-    app.get('/booksList', Book.bookListPage)
-
-    // book detail page
-    app.get('/book/:id', Book.bookDetailPage)
-
-    // softwares list
-    app.get('/softwaresList', Software.softwareListPage)
-
-    // software detail page
-    app.get('/software/:id', Software.softwareDetailPage)
-
     // product list
     app.get('/productList', Product.productListPage)
 
@@ -93,6 +79,12 @@ module.exports = function (app) {
 
     // user center page 
     app.get('/userCenter', User.userCenterPage)
+
+    // user orderList page
+    app.get('/orderList', Order.orderListPage)
+
+    // user order detail page
+    app.get('/order/orderDetail/:id', Order.orderDetailPage)
 
     app.get('/signIn', User.signInPage)
 

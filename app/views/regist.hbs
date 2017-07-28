@@ -9,40 +9,58 @@
             line-height: 25px;
             height: 25px;
         }
+        .phone-check {
+            margin-top: 25px;
+        }
     </style>
 {{/section}}
 
 <header class="ui-header">
-    <i class="ui-icon-return" onclick="history.back()"></i>
+    <a href="/userCenter"><i class="ui-icon-return"></i></a>
     <h1>Regist Page</h1>
 </header>
 <div class="ui-container">
     <div class="ui-form ui-border-t">
-            <div class="ui-form-item ui-form-item-pure ui-border-b">
-                <input type="text" placeholder="QQ号/手机号/邮箱" name="username" id="uName">
-                <a href="#" class="ui-icon-close"></a>
-            </div>
-            <div class="ui-form-item ui-form-item-pure ui-border-b">
-                <input type="password" placeholder="密码" name="password" id="pwd">
-                <a href="#" class="ui-icon-close"></a>
-            </div>
-            <div class="ui-form-item ui-form-item-pure ui-border-b">
-                <input type="password" placeholder="确认密码" name="password" id="cPwd">
-                <a href="#" class="ui-icon-close"></a>
-            </div>
-            <div class="ui-form-item ui-form-item-r ui-border-b">
-                <input type="text" placeholder="请输入验证码">
-                <!-- 若按钮不可点击则添加 disabled 类 -->
-                <button type="button" class="ui-border-l">重新发送</button>
-                <a href="#" class="ui-icon-close"></a>
-            </div>
-            
+        <div class="ui-form-item ui-border-b">
+            <label for="uName">用户名：</label>
+            <input type="text" placeholder="QQ号/手机号/邮箱" name="username" id="uName">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <label for="pwd">密码：</label>
+            <input type="password" placeholder="长度至少为8位字符的密码" name="password" id="pwd">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <label for="cPwd">确认密码：</label>
+            <input type="password" placeholder="再次输入密码" name="password" id="cPwd">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
     </div>
+</div>
+
+<div class="ui-container">
+    <div class="ui-form ui-border-t">
+        <div class="ui-form-item ui-form-item-l ui-border-b">
+            <label class="ui-border-r">
+                中国 +86
+            </label>
+            <input type="text" placeholder="请输入手机号码">
+            <a href="#" class="ui-icon-close">
+            </a>
+        </div>
+        <div class="ui-form-item ui-form-item-r ui-border-b">
+            <input type="text" placeholder="请输入验证码">
+            <!-- 若按钮不可点击则添加 disabled 类 -->
+            <button type="button" class="ui-border-l">重新发送</button>
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+    </div>
+</div>
     <div class="ui-whitespace tips ui-txt-warning" id="tips"></div>
     <div class="ui-whitespace">
         <button class="regist ui-btn-lg ui-btn-primary" type="submit" id="submit">Regist</button>
     </div>
-</div>
 
 {{#section 'script'}} 
     <script>
@@ -52,48 +70,44 @@
             var timeStamp = 500
             var flag = true
 
-                subBtn.on('tap', function(e) {
-                    var uName = $('#uName').val()
-                    var pwd = $('#pwd').val()
-                    var cpwd = $('#cPwd').val()
-                    var myForm = $('#myForm')
-                    var reqUrl = '/v1/user/regist'
-                    
+            subBtn.tap(function(e) {
+                var uName = $('#uName').val()
+                var pwd = $('#pwd').val()
+                var cpwd = $('#cPwd').val()
+                var myForm = $('#myForm')
+                var reqUrl = '/v1/user/regist'
 
-                    console.log(pwd)
-                    console.log(cpwd)
+                if (flag) {
+                    flag = !flag
 
-                    if (flag) {
-                        flag = !flag
-                    
-                        console.log(flag)
-                    
-                        if (!pwd || !cpwd) {
-                            alert('密码不能为空')
-                        } else if ( pwd !== cpwd ) {
-                            alert("两次输入的密码不匹配！！")
-                        } else {
-                            $.post(reqUrl, {
-                                username: uName,
-                                password: pwd
-                            }, function(response) {
-                                console.log(response)
-                                if (response.flag) {
-                                    window.location.href = '/userCenter'
-                                } else {
-                                    tips.append('<span>'+ response.mes +'</span>')
-                                }
-                            })
-                        }
-
-                        setTimeout(function() {
-                            flag = !flag
-                        }, timeStamp)
+                    if (!pwd || !cpwd) {
+                        tips.html('<span>密码不能为空</span>')
+                    } else if ( pwd !== cpwd ) {
+                        tips.html('<span>两次输入的密码不匹配！！</span>')
+                    } else {
+                        $.post(reqUrl, {
+                            username: uName,
+                            password: pwd
+                        }, function(response) {
+                            console.log(response)
+                            if (response.flag) {
+                                window.location.href = '/userCenter'
+                            } else {
+                                tips.html('<span>'+ response.mes +'</span>')
+                            }
+                        })
                     }
-                })
 
-                console.log(uName)
-                console.log(pwd)
+                    setTimeout(function() {
+                        flag = !flag
+                    }, timeStamp)
+                }
+            })
+
+            $('.ui-icon-close').tap(function() {
+                console.log($(this).parent().find('input'))
+                $(this).parent().find('input').val('')
+            })
         })
     </script>
 {{/section}} 
