@@ -1,0 +1,63 @@
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-7">
+      <!-- general form elements -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">商品添加</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form action="/v1/product/updateProduct" method="post" role="form">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">商品名称</label>
+              <input type="text" class="form-control" name="proName" placeholder="输入商品名称">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">商品折扣</label>
+              <input type="number" step="0.01" class="form-control" name="proDisc" placeholder="输入商品折扣">
+            </div>
+            <!-- select -->
+            <div class="form-group">
+              <label>商品类型</label>
+              <select class="form-control" name="category">
+                <option value="0" selected>A 类</option>
+                <option value="1">B 类</option>
+                <option value="2">C 类</option>
+                <option value="3">D 类</option>
+              </select>
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <input type="hidden" name="page" value="PC">
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary">添加</button>
+          </div>
+        </form>
+      </div>
+      <!-- /.box -->
+    </div>
+
+    <div class="col-md-5">
+      <div class="box box-info">
+        <div class="box-header box-border">
+          <h3 class="box-title">upload poster</h3>
+        </div>
+        <form action="">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="">img</label>
+              <input type="file">
+            </div>
+          </div>
+        </form>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary">upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

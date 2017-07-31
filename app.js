@@ -71,10 +71,8 @@ app.use('/js', express.static(path.join(__dirname, 'public/js')));
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/img', express.static(path.join(__dirname, 'public/img')));
 app.use('/font', express.static(path.join(__dirname, 'public/font')));
+app.use('/plugins', express.static(path.join(__dirname, 'public/plugins')))
 app.use('/poster', express.static(path.join(__dirname, 'public/uploadPoster')));
-app.use('/bootstrap', express.static(path.join(__dirname, './node_modules/bootstrap')));
-app.use('/jquery', express.static(path.join(__dirname, './node_modules/jquery')));
-app.use('/videos', express.static(path.join(__dirname, 'videos')));
 
 require('./app/router/routers')(app)
 

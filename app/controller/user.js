@@ -2,8 +2,8 @@ var User = require('../models/user')
 
 // -------------  API  --------------------
 
-// addUser
-exports.addUser = function (req, res) {
+// signUp
+exports.signUp = function (req, res) {
     var userObj = req.body
     console.log('userObj', userObj)
     var _user = new User({
@@ -29,29 +29,6 @@ exports.addUser = function (req, res) {
         }
     });
 };
-
-exports.signUp = function(req, res) {
-    var _user = req.body.user
-    console.log(_user)
-
-    User.find({name: _user.name}, function(err, user) {
-        if (err) {
-            console.log(err)
-        }
-        console.log(user)
-        if (user.length) {
-            res.redirect('/user/signUp')
-        } else {
-            var user = new User(_user)
-            user.save(function(err, user) {
-                if (err) {
-                    console.log(err)
-                }
-                res.redirect('/admin/userList')
-            })
-        }
-    })
-}
 
 // signIn
 // flag: 
@@ -154,6 +131,66 @@ exports.adminRequired = function(req, res, next) {
     next()
 }
 
+exports.adminPCRequired = function(req, res, next) {
+    var user = req.session.user
+
+    if (user.role < 10 ) {
+        return res.redirect('/admin/login')
+    }
+
+    next()
+}
+
+// pc login API
+exports.adminPCLogin = function(req, res) {
+    var name = req.body.name
+    var password = req.body.password
+
+    User.findOne({name: name}, function(err, user) {
+        if (err) {
+            console.log(err)
+        }
+        
+        console.log('user: ', user)
+        if (user) {
+            if (user.role >= 110) {
+                user.comparePassword(password, function (err, isMatch) {
+                    if (err) {
+                        console.log(err)
+                    }
+
+                    if (isMatch) {
+                        console.log('password is matched')
+                        req.session.user = user
+                        res.send({
+                            flag: 1
+                        })
+                    } else {
+                        console.log('password is not matched')
+                        res.send({
+                            flag: 0,
+                            mes: 'password is incorrect!'
+                        })
+                
+                    }
+                })
+            } else {
+                console.log('user name is not exits')
+                res.send({
+                    flag: 3,
+                    mes: 'user is required logined as admin'
+                })
+            }
+        } else {
+            console.log('user name is not exits')
+            res.send({
+                flag: 2,
+                mes: 'user name is not exit'
+            })
+        }
+    })
+}
+
 // ------------ page --------------
 
 exports.userCenterPage = function(req, res) {
@@ -161,4 +198,8 @@ exports.userCenterPage = function(req, res) {
         title: 'user center',
         user: req.session.user
     })
+}
+
+exports.adminPCLoginPage = function(req, res) {
+    res.render('pcAdmin/login', { layout: 'pcLayout' })
 }

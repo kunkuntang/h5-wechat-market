@@ -89,33 +89,40 @@ exports.updateProductPage = function (req, res) {
 
 exports.preSave = function(req, res, next) {
     console.log('req files', req.files)
-    var posterData = req.files.uploadPoster
-    console.log('posterData', posterData)
-    var filePath = posterData.path
-    var originalFilename = posterData.originalFilename
-
-    if(originalFilename) {
-        fs.readFile(filePath, function(err, data) {
-            var timeStamp = Date.now()
-            var type = posterData.type.split('/')[1]
-            var poster = timeStamp + '.' + type
-            var newPath = path.join(__dirname, '../../', '/public/uploadPoster/' + poster)
-
-            fs.writeFile(newPath, data, function(err) {
-                if (err) {
-                    console.log(err)
-                    req.poster = '/public/img/poster.jpg'
-                } else {
-                    req.poster = poster
-                    console.log('req poster', req.poster)
-                    console.log('\n')
-                }
-                next()
-            })
-        })
-    } else {
+    if (!req.files) {
+        req.poster = '/public/img/poster.jpg'
         next()
+    } else {
+        var posterData = req.files.uploadPoster
+        console.log('posterData', posterData)
+        var filePath = posterData.path
+        var originalFilename = posterData.originalFilename
+
+        if(originalFilename) {
+            fs.readFile(filePath, function(err, data) {
+                var timeStamp = Date.now()
+                var type = posterData.type.split('/')[1]
+                var poster = timeStamp + '.' + type
+                var newPath = path.join(__dirname, '../../', '/public/uploadPoster/' + poster)
+
+                fs.writeFile(newPath, data, function(err) {
+                    if (err) {
+                        console.log(err)
+                        req.poster = '/public/img/poster.jpg'
+                    } else {
+                        req.poster = poster
+                        console.log('req poster', req.poster)
+                        console.log('\n')
+                    }
+                    next()
+                })
+            })
+        } else {
+            next()
+        }
     }
+
+    
 }
 
 // addd & update product
@@ -158,7 +165,6 @@ exports.updateProduct = function (req, res) {
                     }
                 })
             }
-
         })
     } else {
         _product = new Product({
@@ -166,13 +172,19 @@ exports.updateProduct = function (req, res) {
             post: productObj.post,
             pic: [],
             price: productObj.price,
+            category: productObj.category,
             discount: productObj.proDisc
         })
         _product.save(productObj, function (err, product) {
             if (err) {
                 console.error(err)
             } else {
-                res.redirect('/product/' + product.id);
+                if (productObj.page === 'mobile') {
+                    res.redirect('/product/' + product.id);
+                } else {
+                    res.redirect('/admin/PC/productManger')
+                }
+                
             }
         });
     }
