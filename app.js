@@ -13,7 +13,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 var session = require('express-session')
 var MongoStore = require('connect-mongo')(session)
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8001;
 var app = express();
 
 var dbUrl = 'mongodb://127.0.0.1:27017/mcMarket'
@@ -65,7 +65,7 @@ app.use(session({
     saveUninitialized: true
 }))
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // for parsing application/x-www-form-urlencoded
 // app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use('/js', express.static(path.join(__dirname, 'public/js')));
 app.use('/css', express.static(path.join(__dirname, 'public/css')));

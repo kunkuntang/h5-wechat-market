@@ -10,6 +10,7 @@ var Software = require('../controller/software')
 var Download = require('../controller/download')
 var Product = require('../controller/product')
 var Order = require('../controller/order')
+var Uploader = require('../controller/uploader')
 
 // var Movie = require('../models/movie');
 var _ = require('underscore');
@@ -45,6 +46,9 @@ module.exports = function (app) {
     app.get('/logout', function (req, res) {
         User.logout(req, res, app)
     })
+
+    // img upload
+    app.post('/v1/uploadImg', multipartMiddleware, Uploader.imgUpload)
 
     // ---------  user view page   --------------------
 

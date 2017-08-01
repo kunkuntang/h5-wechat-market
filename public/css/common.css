@@ -1,0 +1,16 @@
+
+footer .ui-tiled {
+	height: 100%;
+}
+
+.footer-bef {
+	height: 60px;
+}
+
+footer .menu-item {
+	border-left: 1px solid #f3f3f4;
+}
+
+footer .menu-item:first-child {
+	border-left: none;
+}

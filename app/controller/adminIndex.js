@@ -20,7 +20,7 @@ exports.adminPCIndex = function(req, res){
 function renderPage(page, fn) {
     switch (page) {
         case 'index': {
-            
+            fn()
             break;
         }
         case 'userManger': {
