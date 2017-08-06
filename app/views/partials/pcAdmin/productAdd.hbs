@@ -10,7 +10,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form action="/v1/product/updateProduct" method="post" role="form">
+        <form action="/v1/product/updateProduct" method="post" role="form" id="prodForm">
           <div class="box-body">
             <div class="form-group">
               <label for="exampleInputEmail1">商品名称</label>
@@ -31,6 +31,7 @@
               </select>
             </div>
           </div>
+          
           <!-- /.box-body -->
           <input type="hidden" name="page" value="PC">
           <div class="box-footer text-right">
@@ -46,22 +47,24 @@
         <div class="box-header box-border">
           <h3 class="box-title">upload poster</h3>
         </div>
-        <form action="/v1/uploadImg" method="post" id="myForm" enctype='multipart/form-data'>
+        {{!--
+        <form action="/v1/uploadImg" method="post" id="myForm" enctype='multipart/form-data'> --}}
           <div class="box-body">
-            <div class="col-sm-9" id="filesDetail">
-              please selected the picture to upload
-            </div>
-            <div class="col-sm-3">
-              <label for="uploadFile" class="btn btn-primary">select img</label>
-              {{!-- <input type="file" id="uploadFile" style="display: none;" name="imgData"> --}}
-              <input type="file" id="uploadFile" name="imgData">
+            <div class="col-sm-12" id="filesDetail">
+              <div class="col-sm-3">
+                <label for="uploadFile" id="uploadLabel">
+                  <img class="img_upload" src="http://placeholder.qiniudn.com/90x120" alt="">
+                </label>
+                <input type="file" style="display: none" name="uploadFile" id="uploadFile" multiple>
+              </div>
+              <div class="tips"></div>
             </div>
           </div>
           <div class="box-footer text-right">
             <button type="submit" class="btn btn-primary" id="uploadBtn">upload</button>
           </div>
-        </form>
-        
+          {{!-- </form> --}}
+
       </div>
     </div>
   </div>
@@ -74,64 +77,106 @@
     var reader = new FileReader();
     var imgArr = []
 
-    if (window.FileReader) {
-      // add your code here 
-      uploadInput.on('change', function () {
-        console.log(uploadInput.value)
-        imgArr = [], i = 0
-        console.log(this.files)
-        var files = this.files
+    uploadInput.on('change', function () {
+      var formdata = new FormData();
+      var $this = $(this);
+      var fileObj = $this.get(0).files;
+      imgArr.push(fileObj[0])
+      console.log(fileObj)
+      url = '/v1/uploadImg';
 
-        Array.prototype.forEach.call(this.files, function (file, idx) {
-          var reader = new FileReader();
-          reader.readAsDataURL(file)
-          reader.onloadend = function (e) {
-            $('#filesDetail').html('')
-            imgArr.push(e.target.result)
+      for(i = 0; i < fileObj.length; i++) {
+        formdata.append("imgData", fileObj[i]);
+      }
+
+      $.ajax({
+        url: url,
+        type: 'post',
+        data: formdata,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (data) {
+          if (data.code == 1) {
+            var posterArr = data.posterArr
+            console.log('posterArr', posterArr)
+            posterArr.forEach(function(poster) {
+              $('#filesDetail').find('#uploadLabel').parent().before('<div class="col-sm-3 margin-bottom"><img width="90" height="120" src="/poster/' + poster + '" alt="" /></div>');
+              $('#prodForm').append('<input type="text" name="proPost" value="/poster/' + poster + '" />')
+            })
             
-            if (imgArr.length === files.length) {
-              console.log(imgArr)
-              console.log($('#uploadInput').val())
-              // uploadImage(imgArr) 
-              renderImg(imgArr)
-            }
+            // $('#filesDetail').find('.tips').text(data.mes)
+          } else {
+            $('#filesDetail').find('.tips').text(data.mes)
           }
-        })
-      })
-    }
-    else {
-      alert("Not supported by your browser!");
-    }
 
-    $('#uploadBtn').click(function() {
-      // $('#myForm').submit()
+        }
+      });
+      return false;
+    });
+
+  /*
+
+  if (window.FileReader) {
+    // add your code here 
+    uploadInput.on('change', function () {
+      console.log(uploadInput.value)
+      imgArr = [], i = 0
+      console.log(this.files)
+      var files = this.files
+
+      Array.prototype.forEach.call(this.files, function (file, idx) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onloadend = function (e) {
+          $('#filesDetail').html('')
+          imgArr.push(e.target.result)
+          
+          if (imgArr.length === files.length) {
+            console.log(imgArr)
+            // uploadImage(imgArr)  
+            renderImg(imgArr)
+          }
+        }
+      })
     })
+  }
+  else {
+    alert("Not supported by your browser!");
+  }
 
-    function uploadImage(imgArr) {
-      console.log(imgArr)
-      $.post('/v1/uploadImg', {
-        imgData: imgArr
-      }, function(data) {
-        console.log(data)
-      })
-    }
+  */
 
-    function renderImg(imgArr) {
-      Array.prototype.forEach.call(imgArr, function (img,idx) {
-        var imgNode = new Image()
-        imgNode.width = 100
-        imgNode.height = 100
-        imgNode.src = img
-        imgNode.onload = function () {
-          console.log(imgNode)
-          $('#filesDetail').append(imgNode)
-          imgArr.splice(idx,1,1)
-        }
-        imgNode.onerror = function (e) {
-          alert('err', e)
-        }
-      })
-    }
+  $('#uploadBtn').click(function () {
+    // $('#myForm').submit()
+  })
+
+  function uploadImage(imgArr) {
+    console.log(imgArr)
+    $.post('/v1/uploadImg', {
+      imgData: imgArr
+    }, function (data) {
+      console.log(data)
+    })
+  }
+
+  function renderImg(imgArr) {
+    Array.prototype.forEach.call(imgArr, function (img, idx) {
+      var imgNode = new Image()
+      imgNode.width = 100
+      imgNode.height = 100
+      imgNode.src = img
+      imgNode.onload = function () {
+        console.log(imgNode)
+        $('#filesDetail').append(imgNode)
+        imgArr.splice(idx, 1, 1)
+      }
+      imgNode.onerror = function (e) {
+        alert('err', e)
+      }
+    })
+  }
 
   })()
 

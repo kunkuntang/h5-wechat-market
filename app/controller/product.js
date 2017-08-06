@@ -170,7 +170,7 @@ exports.updateProduct = function (req, res) {
         _product = new Product({
             name: productObj.proName,
             post: productObj.post,
-            pic: [],
+            pic: productObj.proPost,
             price: productObj.price,
             category: productObj.category,
             discount: productObj.proDisc

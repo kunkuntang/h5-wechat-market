@@ -51,9 +51,9 @@
 
 <div class="banner ui-container ui-slider" id="slider1">
     <ul class="ui-slider-content" style="width: 300%">
-        <li><span style="background-image:url(http://placeholder.qiniudn.com/640x300)"></span></li>
-        <li><span style="background-image:url(http://placeholder.qiniudn.com/640x300)"></span></li>
-        <li><span style="background-image:url(http://placeholder.qiniudn.com/640x300)"></span></li>
+        {{#each product.pic}}
+            <li><span style="background-image:url({{this}})"></span></li>
+        {{/each}}
     </ul>
 </div>
 
