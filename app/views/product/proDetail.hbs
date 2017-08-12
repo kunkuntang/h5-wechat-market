@@ -7,6 +7,14 @@
             height: 100%;
             color: #ffffff;
         }
+        .operate-panel .price {
+            color: #d62929;
+            font-size: 22px;
+        }
+        .operate-panel .price span{
+            color: #000000;
+            margin-right: 15px;
+        }
         .addCart {
             border-left: 1px solid #e6e6e6;
             background-color: #FF9500;
@@ -46,7 +54,7 @@
 
 <header class="ui-header ui-header-positive ui-border-b">
     <a href="/userCenter"><i class="ui-icon-return"></i></a>
-    <h1>Product Detail</h1>
+    <h1>产品详情</h1>
 </header>
 
 <div class="banner ui-container ui-slider" id="slider1">
@@ -58,20 +66,20 @@
 </div>
 
 <div class="ui-container ui-whitespace ui-center">
-    <div class="title">title: {{product.name}}</div>
+    <div class="title">产品名称: {{product.name}}</div>
     <table class="ui-table ui-border-tb">
         <thead>
-        <tr><th>已购买</th><th>状态</th><th>会员到期时间</th></tr>
+        <tr><th>型号</th><th>库存</th><th>数量</th></tr>
         </thead>
         <tbody>
-        <tr><td>2014257777</td><td>使用中</td><td>2016-02-06</td></tr>
-        <tr><td>2014257777</td><td>待付款</td><td><a href="#">付款</a></td></tr>
-        <tr><td>2014257777</td><td>待付款</td><td><a href="#">付款</a></td></tr>
+        <tr><td>ADB231</td><td>充足</td><td>500起</td></tr>
+        <tr><td>ADB232</td><td>预定</td><td><a href="#">1000起</a></td></tr>
+        <tr><td>ADB233</td><td>紧张</td><td><a href="#">700起</a></td></tr>
         </tbody>
     </table>
     <div class="ui-row">
-        <div class="desc">desc</div>
-        <div class="desc">discount: {{product.discount}}</div>
+        <div class="desc">详细描述：</div>
+        <div class="desc">折扣: {{product.discount}}</div>
     </div>
 </div>
 
@@ -122,13 +130,13 @@
 <footer class="ui-footer ui-footer-stable ui-border-t">
     <ul class="operate-panel ui-tiled">
         <li class="price menu-item">
-            <span>price</span>
+            <span>¥</span>0
         </li>
-        <li class="addCart menu-item">
+        {{!-- <li class="addCart menu-item">
             <span>add cart</span>
-        </li>
+        </li> --}}
         <li class="buyBtn menu-item" id="buyBtn">
-            <span>buy</span>
+            <span>购买</span>
         </li>
     </ul>
 </footer>

@@ -1,6 +1,6 @@
 <header class="ui-header ui-header-positive ui-border-b">
     <i class="ui-icon-return" onclick="history.back()"></i>
-    <h1>order detail</h1>
+    <h1>订单详情</h1>
 </header>
 <div class="ui-container ui-whitespace">
     订单号: {{order.id}}
@@ -30,7 +30,12 @@
 </div>
 
 <div class="ui-container ui-whitespace">
-    备注：
-    {{order.remark}}
-    {{!-- {{order}} --}}
+    备注： {{order.remark}} {{!-- {{order}} --}}
 </div>
+<a href="/">
+    <div class="ui-btn-wrap">
+        <button class="ui-btn-lg">
+            返回首页
+        </button>
+    </div>
+</a>
